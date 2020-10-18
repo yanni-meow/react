@@ -1,4 +1,4 @@
-import React, { createElement, useState } from 'react';
+import React, { useState } from 'react';
 import { ReactComponent as Leaf } from './marijuana.svg'
 
 const Select = ({fullData, emptyAlert='jopa kota', keys, options}) => {
@@ -11,8 +11,10 @@ const Select = ({fullData, emptyAlert='jopa kota', keys, options}) => {
 
     const chooseListItem = (element) => {
         setTextS(element);
+        setInputValue(element.name);
         openList(!isOpen);
         textS.numericCode === element.numericCode && setTextS({[options]: 'choose smthg'});
+        textS.numericCode === element.numericCode && setInputValue('');
     } 
  
     const createListItem = () => {
@@ -40,13 +42,12 @@ const Select = ({fullData, emptyAlert='jopa kota', keys, options}) => {
     }}
 
     const findListItem = (event) => {
-        console.log('options === ', options);
         const filtredList = fullData.filter(element => element[options].toLowerCase().includes(event.target.value.toLowerCase()));
         setInputValue(event.target.value);
         setAllItemsList(filtredList);
         openList(true);
     }
-
+    
     return(
         <div className='selectBox'>
             <div 
