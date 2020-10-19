@@ -10,12 +10,17 @@ const Select = ({fullData, emptyAlert='jopa kota', keys, options}) => {
     const [inputValue, setInputValue] = useState(''); 
 
     const chooseListItem = (element) => {
+        
         setTextS(element);
         setInputValue(element.name);
         openList(!isOpen);
-        textS.numericCode === element.numericCode && setTextS({[options]: 'choose smthg'});
-        textS.numericCode === element.numericCode && setInputValue('');
-    } 
+
+        if(textS.numericCode === element.numericCode) {
+            setTextS({[options]: 'choose smthg'});
+            setInputValue('');
+            setAllItemsList(fullData);
+        }
+    }
  
     const createListItem = () => {
         if(allItemsList.length == 0) {
@@ -42,6 +47,7 @@ const Select = ({fullData, emptyAlert='jopa kota', keys, options}) => {
     }}
 
     const findListItem = (event) => {
+        console.log('event.target.value === ', event.target.value);
         const filtredList = fullData.filter(element => element[options].toLowerCase().includes(event.target.value.toLowerCase()));
         setInputValue(event.target.value);
         setAllItemsList(filtredList);
